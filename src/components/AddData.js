@@ -13,7 +13,7 @@ const AddData = () => {
     // firstName = e.target.value;
     // setFirst(firstName);  //与下面作用相同
     // setFirst(e.target.value)
-    const { name, age } = e.target;
+    // const { name, age } = e.target;
     setData((prevdata) => {
       return {
         ...prevdata,

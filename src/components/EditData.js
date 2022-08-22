@@ -2,15 +2,16 @@ import { Button, Modal, Form, Input } from 'antd';
 import React, { useState } from 'react';
 
 const EditData = (props) => {
+  // const { name, age, _id } = props.record;
+  // const name = props.record.name;
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [item, setItem] = useState({});
+  // const [item, setItem] = useState({ name: '', age: '' });
   const showModal = () => {
     setIsModalVisible(true);
-    setItem(props.record);
-    console.log(item);
-    // console.log(props.record);
+    // console.log(record);
+    // console.log({ name, age, _id });
+    // console.log(name);
   };
-
   const handleOk = () => {
     setIsModalVisible(false);
   };
@@ -73,7 +74,7 @@ const EditData = (props) => {
               },
             ]}
           >
-            <Input value={item.age} />
+            <Input />
           </Form.Item>
         </Form>
       </Modal>

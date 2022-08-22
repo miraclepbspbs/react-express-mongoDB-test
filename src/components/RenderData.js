@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
-import EditData from './EditData.js';
-import { Table, Button } from 'antd';
+// import EditData from './EditData.js';
+import { Table, Button, Modal } from 'antd';
+import DelPopconfirm from './DelPopconfirm';
+import EditModal from './EditModal';
 const getAllDataUrl = 'http://localhost:5000/api/v1/tasks';
 
 const columns = [
@@ -9,7 +11,7 @@ const columns = [
     title: 'Name',
     dataIndex: 'name',
     key: 'name',
-    render: (text) => <a>{text}</a>,
+    render: (text) => <span>{text}</span>,
   },
   {
     title: 'Age',
@@ -25,43 +27,29 @@ const columns = [
     title: 'Action',
     key: 'action',
     render: (record) => (
-      <div>
+      <>
         <Button
           type='primary'
+          danger
           onClick={() => {
             handleDel(record);
           }}
         >
           Delete
         </Button>
-        <EditData record={record} />
-      </div>
+
+        <EditModal {...record} />
+        {/* <DelPopconfirm record={record} /> */}
+        {/* <EditData record={record} /> */}
+      </>
     ),
   },
 ];
-const handleDel = async (record) => {
-  // console.log(record._id);
-  const id = record._id;
-  try {
-    await axios
-      .delete(`http://localhost:5000/api/v1/tasks/${id}`)
-      .then((res) => {
-        console.log(res);
-      });
-  } catch (error) {
-    console.log(error);
-  }
-};
-const handleEdit = async (record) => {
-  // const { name, age } = record;
-  // console.log({ name, age });
+const handleDel = async ({ _id }) => {
   try {
     axios
-      .patch(`http://localhost:5000/api/v1/tasks/${record._id}`, {
-        name: '213',
-        age: 11,
-      })
-      .then((res) => console.log(res));
+      .delete(`${getAllDataUrl}/${_id}`)
+      .then((res) => console.log(res.data));
   } catch (error) {
     console.log(error);
   }
@@ -73,6 +61,7 @@ const RenderData = () => {
   useEffect(() => {
     getAll();
   }, [data]);
+
   const getAll = async () => {
     try {
       await axios.get(getAllDataUrl).then((res) => {
